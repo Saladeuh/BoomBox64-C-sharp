@@ -1,0 +1,15 @@
+C:\Users\emili\BUT3eAnnee\jv\memory\memory\bin\Debug\net6.0\memory.exe
+C:\Users\emili\BUT3eAnnee\jv\memory\memory\bin\Debug\net6.0\memory.deps.json
+C:\Users\emili\BUT3eAnnee\jv\memory\memory\bin\Debug\net6.0\memory.runtimeconfig.json
+C:\Users\emili\BUT3eAnnee\jv\memory\memory\bin\Debug\net6.0\memory.dll
+C:\Users\emili\BUT3eAnnee\jv\memory\memory\bin\Debug\net6.0\memory.pdb
+C:\Users\emili\BUT3eAnnee\jv\memory\memory\obj\Debug\net6.0\memory.csproj.AssemblyReference.cache
+C:\Users\emili\BUT3eAnnee\jv\memory\memory\obj\Debug\net6.0\memory.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\emili\BUT3eAnnee\jv\memory\memory\obj\Debug\net6.0\memory.AssemblyInfoInputs.cache
+C:\Users\emili\BUT3eAnnee\jv\memory\memory\obj\Debug\net6.0\memory.AssemblyInfo.cs
+C:\Users\emili\BUT3eAnnee\jv\memory\memory\obj\Debug\net6.0\memory.csproj.CoreCompileInputs.cache
+C:\Users\emili\BUT3eAnnee\jv\memory\memory\obj\Debug\net6.0\memory.dll
+C:\Users\emili\BUT3eAnnee\jv\memory\memory\obj\Debug\net6.0\refint\memory.dll
+C:\Users\emili\BUT3eAnnee\jv\memory\memory\obj\Debug\net6.0\memory.pdb
+C:\Users\emili\BUT3eAnnee\jv\memory\memory\obj\Debug\net6.0\memory.genruntimeconfig.cache
+C:\Users\emili\BUT3eAnnee\jv\memory\memory\obj\Debug\net6.0\ref\memory.dll
