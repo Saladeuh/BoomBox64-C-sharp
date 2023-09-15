@@ -13,3 +13,6 @@ C:\Users\emili\BUT3eAnnee\jv\memory\memory\obj\Debug\net6.0\refint\memory.dll
 C:\Users\emili\BUT3eAnnee\jv\memory\memory\obj\Debug\net6.0\memory.pdb
 C:\Users\emili\BUT3eAnnee\jv\memory\memory\obj\Debug\net6.0\memory.genruntimeconfig.cache
 C:\Users\emili\BUT3eAnnee\jv\memory\memory\obj\Debug\net6.0\ref\memory.dll
+C:\Users\emili\BUT3eAnnee\jv\memory\memory\bin\Debug\net6.0\FmodAudio.dll
+C:\Users\emili\BUT3eAnnee\jv\memory\memory\obj\Debug\net6.0\memory.csproj.CopyComplete
+C:\Users\emili\BUT3eAnnee\jv\memory\memory\bin\Debug\net6.0\fmod.dll

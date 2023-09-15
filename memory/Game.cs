@@ -12,12 +12,14 @@ internal class Game
   private int MaxRetry { get; set; }
   private int[,] Grid { get; set; }
   public GameStatus Status { get; set; }
+  public SoundSystem SoundSystem { get; set; }
   public Game()
   {
     MaxRetry = 10;
     Grid = new int[3,2];
     FillGridByRandomInt();
     Status = GameStatus.New;
+    SoundSystem= new SoundSystem();
   }
   public void FillGridByRandomInt()
   {
@@ -34,6 +36,11 @@ internal class Game
     do
     {
       keyinfo = Console.ReadKey();
+      if (char.IsDigit(keyinfo.KeyChar))
+      {
+        SoundSystem.System.PlaySound(SoundSystem.TestSound, paused: false);
+        //Console.WriteLine(Grid[keyinfo.KeyChar]);
+      }
       Console.WriteLine(keyinfo.KeyChar);
     } while (keyinfo.Key != ConsoleKey.X);
   }
