@@ -8,17 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <ContentWithTargetPath Include=".\Content\test.wav">
-		  <CopyToOutputDirectory>PreserveNewest	</CopyToOutputDirectory>
-		  <Visible>false</Visible>
-		  <TargetPath>test.wav</TargetPath>
-	  </ContentWithTargetPath>
-	  <ContentWithTargetPath Include=".\Libs\fmod.dll">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		  <Visible>false</Visible>
-		  <TargetPath>fmod.dll</TargetPath>
-	  </ContentWithTargetPath>
-	  <Reference Include="FmodAudio">
+  <ContentWithTargetPath Include=".\Content\test.wav">
+	  <CopyToOutputDirectory>PreserveNewest	</CopyToOutputDirectory>
+  <Visible>false</Visible>
+  <TargetPath>test.wav</TargetPath>
+  </ContentWithTargetPath>
+  <ContentWithTargetPath Include=".\Libs\fmod.dll">
+  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  <Visible>false</Visible>
+  <TargetPath>fmod.dll</TargetPath>
+  </ContentWithTargetPath>
+  <Reference Include="FmodAudio">
       <HintPath>Libs\FmodAudio.dll</HintPath>
     </Reference>
   </ItemGroup>

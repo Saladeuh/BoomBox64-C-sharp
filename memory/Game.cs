@@ -38,7 +38,7 @@ internal class Game
       keyinfo = Console.ReadKey();
       if (char.IsDigit(keyinfo.KeyChar))
       {
-        SoundSystem.System.PlaySound(SoundSystem.TestSound, paused: false);
+        SoundSystem.System.PlaySound(SoundSystem.Sounds[int.Parse(keyinfo.KeyChar.ToString())-1], paused: false);
         //Console.WriteLine(Grid[keyinfo.KeyChar]);
       }
       Console.WriteLine(keyinfo.KeyChar);
