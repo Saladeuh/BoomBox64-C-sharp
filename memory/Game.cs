@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using memory;
 
 namespace memoryGame;
 
@@ -41,17 +42,52 @@ internal class Game
       if (char.IsDigit(keyinfo.KeyChar))
       {
         int caseIndex = int.Parse(keyinfo.KeyChar.ToString()) - 1;
-        int soundIndex = Grid[caseIndex].Item1 - 1;
-        TryCase(soundIndex + 1);
-        Grid[caseIndex] = (Grid[caseIndex].Item1, CaseState.Touched);
+        int soundIndex = Grid[caseIndex].Item1-1;
+        TryCase(soundIndex + 1, caseIndex);
+        foreach (var pair in Grid)
+        { Console.WriteLine(pair); }
         SoundSystem.System.PlaySound(SoundSystem.Sounds[soundIndex], paused: false);
       }
     } while (keyinfo.Key != ConsoleKey.X);
   }
-  private void TryCase(int index)
+  private void TryCase(int soundIndex, int caseIndex)
   {
-    if (Grid.Contains((index, CaseState.Touched))) { 
-      Console.WriteLine("wéééé");
+    var caseIndexTouched = Util.IndexesWhere(Grid, o => o.Item1 == soundIndex && o.Item2==CaseState.Touched).ToList();
+    var isACaseTouched = Util.IndexesWhere(Grid, o => o.Item2 == CaseState.Touched).ToList();
+    if (Grid[caseIndex].Item2 == CaseState.Paired)
+    {
+      return;
+    } else if (caseIndexTouched.Count() == 1 && !caseIndexTouched.Contains(caseIndex))
+    {
+      Grid[caseIndexTouched[0]] = (soundIndex, CaseState.Paired);
+      Grid[caseIndex] = (soundIndex, CaseState.Paired);
+    }
+    else if (isACaseTouched.Count() == 1)
+    {
+      Grid[isACaseTouched[0]] = (Grid[isACaseTouched[0]].Item1, CaseState.None);
+    }
+    else if (caseIndexTouched.Count() == 0)
+    {
+      Grid[caseIndex] = (Grid[caseIndex].Item1, CaseState.Touched);
+    }       /*
+    for (int i = 0; i < Grid.Count; i++)
+    {
+      if (Grid[i].Item1 == index && Grid[i].Item2 == CaseState.Touched)
+      {
+        Grid[i] = (index, CaseState.Paired);
+      }
+    }
+    Console.Write("youhouuu");
+    else
+    {
+      for (int i = 0; i < Grid.Count; i++)
+      {
+        if (Grid[i].Item2 == CaseState.Touched)
+        {
+          Grid[i] = (Grid[i].Item1, CaseState.None);
+        }
+      }
+    }
+    */
+    }
   }
-  }
-}
