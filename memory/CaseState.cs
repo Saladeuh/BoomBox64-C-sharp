@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace memoryGame;
 
-internal enum GameStatus
+internal enum CaseState
 {
-  OneCaseSelect, 
-  GoodSecondCaseSelected,
-  BadSecondCaseSelected,
-  Won,
-  Lost,
-  New
+  Touched,
+  Paired,
+  None
 }

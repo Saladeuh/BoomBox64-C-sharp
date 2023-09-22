@@ -1,7 +1,7 @@
 using System.Numerics;
 using FmodAudio;
 
-namespace memory;
+namespace memoryGame;
 public class SoundSystem
 {
   public FmodSystem System { get; }
@@ -9,7 +9,6 @@ public class SoundSystem
   public Vector3 FollowMePoint { get; set; }
   public bool GPSState { get; set; }
   public List<Vector3> GPSPath { get; set; }
-  public int GPSPlayingIndex { get; set; }
   public Sound[] Sounds { get; set; }
 
   private Vector3 ListenerPos = new Vector3() { Z = -1.0f };
@@ -17,7 +16,9 @@ public class SoundSystem
   public Dictionary<uint, Channel> ObjChannels = new Dictionary<uint, Channel>();
   public Dictionary<Vector3, Channel> WallsChannels = new Dictionary<Vector3, Channel>();
   public Dictionary<uint, HashSet<Vector3>> Tracks = new Dictionary<uint, HashSet<Vector3>>();
-  public SoundSystem()
+  public int maxSounds
+  { get; set; }
+  public SoundSystem(int maxSounds)
   {
     //Creates the FmodSystem object
     System = FmodAudio.Fmod.CreateSystem();
@@ -29,15 +30,16 @@ public class SoundSystem
     System.Set3DListenerAttributes(0, in ListenerPos, default, in Forward, in Up);
     //Load some sounds
     float min = 2f, max = 40f; // 40 is apprximatively
+    this.maxSounds = maxSounds;
     loadSounds();
   }
- private void loadSounds()
+  private void loadSounds()
   {
-    Sounds=new Sound[3];
+    Sounds = new Sound[maxSounds];
     Sound sound;
-    for (int i = 1; i < 4; i++)
+    for (int i = 0; i < maxSounds; i++)
     {
-      Sounds[i-1]=sound = System.CreateSound($"test{i}.wav", Mode._3D | Mode.Loop_Normal | Mode._3D_LinearSquareRolloff);
+      Sounds[i] = sound = System.CreateSound($"test{i+1}.wav", Mode._3D | Mode.Loop_Off | Mode._3D_LinearSquareRolloff);
     }
   }
 }

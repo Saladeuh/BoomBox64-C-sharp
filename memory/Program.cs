@@ -1,4 +1,4 @@
-﻿namespace memory
+﻿namespace memoryGame
 {
   internal class Program
   {
