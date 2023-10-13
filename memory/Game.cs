@@ -42,22 +42,28 @@ internal class Game
       if (char.IsDigit(keyinfo.KeyChar))
       {
         int caseIndex = int.Parse(keyinfo.KeyChar.ToString()) - 1;
-        int soundIndex = Grid[caseIndex].Item1-1;
+        int soundIndex = Grid[caseIndex].Item1 - 1;
         TryCase(soundIndex + 1, caseIndex);
         foreach (var pair in Grid)
         { Console.WriteLine(pair); }
         SoundSystem.System.PlaySound(SoundSystem.Sounds[soundIndex], paused: false);
+        if(Grid.All(pair => pair.Item2 == CaseState.Paired))
+        {
+          Console.WriteLine("gagné!");
+          return;
+        }
       }
     } while (keyinfo.Key != ConsoleKey.X);
   }
   private void TryCase(int soundIndex, int caseIndex)
   {
-    var caseIndexTouched = Util.IndexesWhere(Grid, o => o.Item1 == soundIndex && o.Item2==CaseState.Touched).ToList();
+    var caseIndexTouched = Util.IndexesWhere(Grid, o => o.Item1 == soundIndex && o.Item2 == CaseState.Touched).ToList();
     var isACaseTouched = Util.IndexesWhere(Grid, o => o.Item2 == CaseState.Touched).ToList();
     if (Grid[caseIndex].Item2 == CaseState.Paired)
     {
       return;
-    } else if (caseIndexTouched.Count() == 1 && !caseIndexTouched.Contains(caseIndex))
+    }
+    else if (caseIndexTouched.Count() == 1 && !caseIndexTouched.Contains(caseIndex))
     {
       Grid[caseIndexTouched[0]] = (soundIndex, CaseState.Paired);
       Grid[caseIndex] = (soundIndex, CaseState.Paired);
@@ -69,25 +75,6 @@ internal class Game
     else if (caseIndexTouched.Count() == 0)
     {
       Grid[caseIndex] = (Grid[caseIndex].Item1, CaseState.Touched);
-    }       /*
-    for (int i = 0; i < Grid.Count; i++)
-    {
-      if (Grid[i].Item1 == index && Grid[i].Item2 == CaseState.Touched)
-      {
-        Grid[i] = (index, CaseState.Paired);
-      }
-    }
-    Console.Write("youhouuu");
-    else
-    {
-      for (int i = 0; i < Grid.Count; i++)
-      {
-        if (Grid[i].Item2 == CaseState.Touched)
-        {
-          Grid[i] = (Grid[i].Item1, CaseState.None);
-        }
-      }
-    }
-    */
     }
   }
+}
