@@ -16,7 +16,7 @@ internal class Game
   public SoundSystem SoundSystem { get; set; }
   public Game()
   {
-    MaxRetry = 10;
+    MaxRetry = 5;
     FillGridByRandomInt();
     Status = GameStatus.New;
     SoundSystem = new SoundSystem(3);
@@ -51,6 +51,9 @@ internal class Game
         {
           Console.WriteLine("gagné!");
           return;
+        } else if (Retry >= MaxRetry)
+        {
+          Console.WriteLine("perdu");
         }
       }
     } while (keyinfo.Key != ConsoleKey.X);
@@ -67,10 +70,12 @@ internal class Game
     {
       Grid[caseIndexTouched[0]] = (soundIndex, CaseState.Paired);
       Grid[caseIndex] = (soundIndex, CaseState.Paired);
+      Retry++;
     }
     else if (isACaseTouched.Count() == 1)
     {
       Grid[isACaseTouched[0]] = (Grid[isACaseTouched[0]].Item1, CaseState.None);
+      Retry++;
     }
     else if (caseIndexTouched.Count() == 0)
     {
