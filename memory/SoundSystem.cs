@@ -10,6 +10,8 @@ public class SoundSystem
   private Vector3 ListenerPos = new Vector3() { Z = -1.0f };
   public Vector3 Up = new Vector3(0, 1, 0), Forward = new Vector3(0, 0, -1);
   public int maxSounds { get; set; }
+  public List<Sound> Musics { get; private set; }
+
   public SoundSystem(int maxSounds)
   {
     //Creates the FmodSystem object
@@ -24,6 +26,7 @@ public class SoundSystem
     float min = 2f, max = 40f; // 40 is apprximatively
     this.maxSounds = maxSounds;
     loadSounds();
+    LoadMusics();
   }
   private void loadSounds()
   {
@@ -37,6 +40,15 @@ public class SoundSystem
       //Channels[i].Volume = 0.5f;
     }
   }
+  private void LoadMusics()
+  {
+    Musics = new List<Sound>();
+    Sound sound;
+    sound = System.CreateStream("music/OTOATE.wav");
+    System.PlaySound(sound, paused: false);
+    Musics.Add(sound);
+  }
+      
   public void PlayQueue(Sound sound)
   {
     Thread thread=new Thread(() =>
@@ -45,7 +57,7 @@ public class SoundSystem
       do
       {
         System.GetChannelsPlaying(out all, out real);
-      } while (real > 0);
+      } while (real > 1);
         Channel channel=System.PlaySound(sound, paused: false);
       while(channel.IsPlaying) { }
       channel.Stop();
