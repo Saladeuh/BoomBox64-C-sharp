@@ -5,26 +5,18 @@ namespace memoryGame;
 public class SoundSystem
 {
   public FmodSystem System { get; }
-  public Channel? channelFollowMe, channelShortFollowMe;
-  public Vector3 FollowMePoint { get; set; }
-  public bool GPSState { get; set; }
   public List<Vector3> GPSPath { get; set; }
   public Sound[] Sounds { get; set; }
 
   private Vector3 ListenerPos = new Vector3() { Z = -1.0f };
   public Vector3 Up = new Vector3(0, 1, 0), Forward = new Vector3(0, 0, -1);
-  public Dictionary<uint, Channel> ObjChannels = new Dictionary<uint, Channel>();
-  public Dictionary<Vector3, Channel> WallsChannels = new Dictionary<Vector3, Channel>();
-  public Dictionary<uint, HashSet<Vector3>> Tracks = new Dictionary<uint, HashSet<Vector3>>();
-  public int maxSounds
-  { get; set; }
+  public int maxSouns { get; set; }
   public SoundSystem(int maxSounds)
   {
     //Creates the FmodSystem object
     System = FmodAudio.Fmod.CreateSystem();
     //System object Initialization
     System.Init(4093, InitFlags._3D_RightHanded);
-
     //Set the distance Units (Meters/Feet etc)
     System.Set3DSettings(1.0f, 1.0f, 1.0f);
     System.Set3DListenerAttributes(0, in ListenerPos, default, in Forward, in Up);
