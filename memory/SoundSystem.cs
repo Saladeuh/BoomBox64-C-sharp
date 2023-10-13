@@ -16,7 +16,7 @@ public class SoundSystem
     System = FmodAudio.Fmod.CreateSystem();
     //System object Initialization
     System.Init(4093, InitFlags._3D_RightHanded);
-    var group = System.MasterSoundGroup.GetValueOrDefault().Volume = 0.1f;
+    System.MasterSoundGroup.GetValueOrDefault().Volume = 0.5f;
     //Set the distance Units (Meters/Feet etc)
     System.Set3DSettings(1.0f, 1.0f, 1.0f);
     System.Set3DListenerAttributes(0, in ListenerPos, default, in Forward, in Up);
@@ -33,9 +33,23 @@ public class SoundSystem
     for (int i = 0; i < maxSounds; i++)
     {
       Sounds[i] = sound = System.CreateSound($"test{i+1}.wav", Mode._3D | Mode.Loop_Off | Mode._3D_LinearSquareRolloff);
-      Channels[i] = System.PlaySound(sound, paused: true);
-      Channels[i].Volume = 0.5f;
+      //Channels[i] = System.PlaySound(sound, paused: true);
+      //Channels[i].Volume = 0.5f;
     }
   }
-
+  public void PlayQueue(Sound sound)
+  {
+    Thread thread=new Thread(() =>
+    {
+      int all, real;
+      do
+      {
+        System.GetChannelsPlaying(out all, out real);
+      } while (real > 0);
+        Channel channel=System.PlaySound(sound, paused: false);
+      while(channel.IsPlaying) { }
+      channel.Stop();
+    });
+    thread.Start();
+  }
 }
