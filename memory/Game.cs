@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FmodAudio;
 using memory;
 
 namespace memoryGame;
@@ -46,8 +47,9 @@ internal class Game
         TryCase(soundIndex + 1, caseIndex);
         foreach (var pair in Grid)
         { Console.WriteLine(pair); }
-        SoundSystem.System.PlaySound(SoundSystem.Sounds[soundIndex], paused: false);
-        if(Grid.All(pair => pair.Item2 == CaseState.Paired))
+        SoundSystem.System.PlaySound(SoundSystem.Channels[soundIndex].CurrentSound, paused: false);
+        SoundSystem.System.PlaySound(SoundSystem.Sounds[soundIndex], paused: false);  
+        if (Grid.All(pair => pair.Item2 == CaseState.Paired))
         {
           Console.WriteLine("gagné!");
           return;
