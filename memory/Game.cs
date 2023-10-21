@@ -44,17 +44,19 @@ internal class Game
       {
         int caseIndex = int.Parse(keyinfo.KeyChar.ToString()) - 1;
         int soundIndex = Grid[caseIndex].Item1 - 1;
+        SoundSystem.PlayQueue(SoundSystem.Sounds[soundIndex]);
         TryCase(soundIndex + 1, caseIndex);
         foreach (var pair in Grid)
         { Console.WriteLine(pair); }
-        SoundSystem.PlayQueue(SoundSystem.Sounds[soundIndex]);
         if (Grid.All(pair => pair.Item2 == CaseState.Paired))
         {
           Console.WriteLine("gagné!");
+          SoundSystem.PlayQueue(SoundSystem.JingleWin);
           return;
         } else if (Retry >= MaxRetry)
         {
           Console.WriteLine("perdu");
+          SoundSystem.PlayQueue(SoundSystem.JingleLose);
         }
       }
     } while (keyinfo.Key != ConsoleKey.X);
@@ -72,11 +74,13 @@ internal class Game
       Grid[caseIndexTouched[0]] = (soundIndex, CaseState.Paired);
       Grid[caseIndex] = (soundIndex, CaseState.Paired);
       Retry++;
+      SoundSystem.PlayQueue(SoundSystem.JingleCaseWin);
     }
     else if (isACaseTouched.Count() == 1)
     {
       Grid[isACaseTouched[0]] = (Grid[isACaseTouched[0]].Item1, CaseState.None);
       Retry++;
+      SoundSystem.PlayQueue(SoundSystem.JingleCaseLose);
     }
     else if (caseIndexTouched.Count() == 0)
     {

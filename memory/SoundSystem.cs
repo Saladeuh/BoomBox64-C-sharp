@@ -11,6 +11,10 @@ public class SoundSystem
   public Vector3 Up = new Vector3(0, 1, 0), Forward = new Vector3(0, 0, -1);
   public int maxSounds { get; set; }
   public List<Sound> Musics { get; private set; }
+  public Sound JingleCaseWin { get; private set; }
+  public Sound JingleCaseLose { get; private set; }
+  public Sound JingleWin { get; private set; }
+  public Sound JingleLose { get; private set; }
 
   public SoundSystem(int maxSounds)
   {
@@ -35,7 +39,7 @@ public class SoundSystem
     Sound sound;
     for (int i = 0; i < maxSounds; i++)
     {
-      Sounds[i] = sound = System.CreateSound($"test{i+1}.wav", Mode._3D | Mode.Loop_Off | Mode._3D_LinearSquareRolloff);
+      Sounds[i] = sound = System.CreateSound($"test{i + 1}.wav", Mode._3D | Mode.Loop_Off | Mode._3D_LinearSquareRolloff);
       //Channels[i] = System.PlaySound(sound, paused: true);
       //Channels[i].Volume = 0.5f;
     }
@@ -45,21 +49,25 @@ public class SoundSystem
     Musics = new List<Sound>();
     Sound sound;
     sound = System.CreateStream("music/OTOATE.wav");
-    System.PlaySound(sound, paused: false);
+    //System.PlaySound(sound, paused: false);
     Musics.Add(sound);
+    JingleCaseWin = sound = System.CreateStream("music/Jingle_SLVSTAR1.mp3");
+    JingleCaseLose = sound = System.CreateStream("music/Jingle_DROPSTAR.mp3");
+    JingleWin = sound = System.CreateStream("music/Jingle_MINICLEAR.mp3");
+    JingleLose = sound = System.CreateStream("music/Jingle_MINIOVER.mp3");
   }
-      
+
   public void PlayQueue(Sound sound)
   {
-    Thread thread=new Thread(() =>
+    Thread thread = new Thread(() =>
     {
       int all, real;
       do
       {
         System.GetChannelsPlaying(out all, out real);
-      } while (real > 1);
-        Channel channel=System.PlaySound(sound, paused: false);
-      while(channel.IsPlaying) { }
+      } while (real > 0);
+      Channel channel = System.PlaySound(sound, paused: false);
+      while (channel.IsPlaying) {}
       channel.Stop();
     });
     thread.Start();
