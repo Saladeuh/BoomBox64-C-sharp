@@ -15,12 +15,12 @@ internal class Level
   private int MaxRetry { get; set; }
   private List<(int, CaseState)> Grid { get; set; }
   public SoundSystem SoundSystem { get; set; }
-  public Level(int nbSounds=3, int maxRetry=5)
+  public Level(int nbSounds=3, string group="test", int maxRetry=5)
   {
     NbSounds = nbSounds;
     MaxRetry = maxRetry;
     FillGridByRandomInt();
-    SoundSystem = new SoundSystem(nbSounds);
+    SoundSystem = new SoundSystem(nbSounds, group);
   }
   public void FillGridByRandomInt()
   {
@@ -40,7 +40,7 @@ internal class Level
     do
     {
       keyinfo = Console.ReadKey();
-      if (char.IsDigit(keyinfo.KeyChar))
+      if (char.IsDigit(keyinfo.KeyChar) && int.Parse(keyinfo.KeyChar.ToString())<=NbSounds*2)
       {
         int caseIndex = int.Parse(keyinfo.KeyChar.ToString()) - 1;
         int soundIndex = Grid[caseIndex].Item1 - 1;
@@ -75,7 +75,6 @@ internal class Level
     {
       Grid[caseIndexTouched[0]] = (soundIndex, CaseState.Paired);
       Grid[caseIndex] = (soundIndex, CaseState.Paired);
-      Retry++;
       SoundSystem.PlayQueue(SoundSystem.JingleCaseWin);
     }
     else if (isACaseTouched.Count() == 1)
@@ -89,4 +88,5 @@ internal class Level
       Grid[caseIndex] = (Grid[caseIndex].Item1, CaseState.Touched);
     }
   }
+
 }

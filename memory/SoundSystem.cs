@@ -16,7 +16,7 @@ public class SoundSystem
   public Sound JingleWin { get; private set; }
   public Sound JingleLose { get; private set; }
 
-  public SoundSystem(int maxSounds)
+  public SoundSystem(int maxSounds, string group)
   {
     //Creates the FmodSystem object
     System = FmodAudio.Fmod.CreateSystem();
@@ -29,17 +29,21 @@ public class SoundSystem
     //Load some sounds
     float min = 2f, max = 40f; // 40 is apprximatively
     this.maxSounds = maxSounds;
-    loadSounds();
+    LoadSounds(group);
     LoadMusics();
   }
-  private void loadSounds()
+  
+  private void LoadSounds(string group)
   {
     Sounds = new Sound[maxSounds];
     Channels = new Channel[maxSounds];
     Sound sound;
+    var rnd=new Random();
+    var files = Directory.GetFiles(group);
+    var rndArray =Enumerable.Range(0, files.Length).OrderBy(item => rnd.Next()).ToArray();
     for (int i = 0; i < maxSounds; i++)
     {
-      Sounds[i] = sound = System.CreateSound($"test{i + 1}.wav", Mode._3D | Mode.Loop_Off | Mode._3D_LinearSquareRolloff);
+      Sounds[i] = sound = System.CreateSound(files[rndArray[i]], Mode._3D | Mode.Loop_Off | Mode._3D_LinearSquareRolloff);
       //Channels[i] = System.PlaySound(sound, paused: true);
       //Channels[i].Volume = 0.5f;
     }
@@ -67,8 +71,11 @@ public class SoundSystem
         System.GetChannelsPlaying(out all, out real);
       } while (real > 0);
       Channel channel = System.PlaySound(sound, paused: false);
-      while (channel.IsPlaying) {}
-      channel.Stop();
+      if (channel != null)
+      {
+        while (channel.IsPlaying) { Thread.Sleep(10); }
+        channel.Stop();
+      }
     });
     thread.Start();
   }

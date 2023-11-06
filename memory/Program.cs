@@ -6,11 +6,13 @@ namespace memoryGame
   {
     static void Main(string[] args)
     {
-        Level level = new Level();
+      var random = new Random();
+      var groups = new List<string> { "yoshi", "test" } ;
+      var randomGroup = groups[random.Next(groups.Count)];
+      Level level = new Level(3,randomGroup);
       while (level.PlayLevel())
       {
-        //level.SoundSystem.System.Release();
-        level = new Level();
+        level = new Level(4);
       }
     }
   }
