@@ -15,6 +15,7 @@ public class SoundSystem
   public Sound JingleCaseLose { get; private set; }
   public Sound JingleWin { get; private set; }
   public Sound JingleLose { get; private set; }
+  public Thread currentThread { get; private set; }
 
   public SoundSystem(int maxSounds, string group)
   {
@@ -39,7 +40,7 @@ public class SoundSystem
     Channels = new Channel[maxSounds];
     Sound sound;
     var rnd=new Random();
-    var files = Directory.GetFiles(group);
+    var files = Directory.GetFiles(group, "*.wav");
     var rndArray =Enumerable.Range(0, files.Length).OrderBy(item => rnd.Next()).ToArray();
     for (int i = 0; i < maxSounds; i++)
     {
@@ -63,7 +64,7 @@ public class SoundSystem
 
   public void PlayQueue(Sound sound)
   {
-    Thread thread = new Thread(() =>
+    currentThread = new Thread(() =>
     {
       int all, real;
       do
@@ -77,6 +78,6 @@ public class SoundSystem
         channel.Stop();
       }
     });
-    thread.Start();
+    currentThread.Start();
   }
 }
