@@ -8,31 +8,31 @@ using memory;
 
 namespace memoryGame;
 
-internal class Game
+internal class Level
 {
   private int Retry { get; set; }
+  public int NbSounds { get; }
   private int MaxRetry { get; set; }
   private List<(int, CaseState)> Grid { get; set; }
-  public GameStatus Status { get; set; }
   public SoundSystem SoundSystem { get; set; }
-  public Game()
+  public Level(int nbSounds=3, int maxRetry=5)
   {
-    MaxRetry = 5;
+    NbSounds = nbSounds;
+    MaxRetry = maxRetry;
     FillGridByRandomInt();
-    Status = GameStatus.New;
-    SoundSystem = new SoundSystem(3);
+    SoundSystem = new SoundSystem(nbSounds);
   }
   public void FillGridByRandomInt()
   {
     var rnd = new Random();
-    var randomDisposition = Enumerable.Range(1, 3).Concat(Enumerable.Range(1, 3)).OrderBy(r => rnd.Next()).ToArray();
+    var randomDisposition = Enumerable.Range(1, NbSounds).Concat(Enumerable.Range(1, NbSounds)).OrderBy(r => rnd.Next()).ToArray();
     Grid = new List<(int, CaseState)>();
     foreach (int n in randomDisposition)
     {
       Grid.Add((n, CaseState.None));
     }
   }
-  public void Play()
+  public bool PlayLevel()
   {
     ConsoleKeyInfo keyinfo;
     foreach (var pair in Grid)
@@ -52,14 +52,16 @@ internal class Game
         {
           Console.WriteLine("gagné!");
           SoundSystem.PlayQueue(SoundSystem.JingleWin);
-          return;
+          return true;
         } else if (Retry >= MaxRetry)
         {
           Console.WriteLine("perdu");
           SoundSystem.PlayQueue(SoundSystem.JingleLose);
+          return false;
         }
       }
     } while (keyinfo.Key != ConsoleKey.X);
+    return false;
   }
   private void TryCase(int soundIndex, int caseIndex)
   {

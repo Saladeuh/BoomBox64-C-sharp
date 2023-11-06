@@ -1,11 +1,17 @@
-﻿namespace memoryGame
+﻿using System.Reflection.Emit;
+
+namespace memoryGame
 {
   internal class Program
   {
     static void Main(string[] args)
     {
-      Game game=new Game();
-      game.Play();
+        Level level = new Level();
+      while (level.PlayLevel())
+      {
+        //level.SoundSystem.System.Release();
+        level = new Level();
+      }
     }
   }
 }
