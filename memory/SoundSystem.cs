@@ -10,7 +10,7 @@ public class SoundSystem
   private Vector3 ListenerPos = new Vector3() { Z = -1.0f };
   public Vector3 Up = new Vector3(0, 1, 0), Forward = new Vector3(0, 0, -1);
   public int maxSounds { get; set; }
-  public List<Sound> Musics { get; private set; }
+  public List<Channel> Musics { get; private set; }
   public Sound JingleCaseWin { get; private set; }
   public Sound JingleCaseLose { get; private set; }
   public Sound JingleWin { get; private set; }
@@ -26,7 +26,7 @@ public class SoundSystem
     //Set the distance Units (Meters/Feet etc)
     System.Set3DSettings(1.0f, 1.0f, 1.0f);
     System.Set3DListenerAttributes(0, in ListenerPos, default, in Forward, in Up);
-    //Load some sounds
+    //Load sounds
     float min = 2f, max = 40f; // 40 is apprximatively
     this.maxSounds = maxSounds;
     LoadSounds(group);
@@ -50,43 +50,46 @@ public class SoundSystem
   }
   private void LoadMusics()
   {
-    Musics = new List<Sound>();
+    Musics = new List<Channel>();
     Sound sound;
     sound = System.CreateStream("music/OTOATE.wav");
-    //System.PlaySound(sound, paused: false);
-    Musics.Add(sound);
+    //PlayQueue(sound);
+    Musics.Add(((Channel)System.PlaySound(sound, paused: false)));
     JingleCaseWin = sound = System.CreateStream("music/Jingle_SLVSTAR1.mp3");
     JingleCaseLose = sound = System.CreateStream("music/Jingle_DROPSTAR.mp3");
     JingleWin = sound = System.CreateStream("music/Jingle_MINICLEAR.mp3");
     JingleLose = sound = System.CreateStream("music/Jingle_MINIOVER.mp3");
   }
-
+  public List<Task> tasks = new List<Task>();
   public void PlayQueue(Sound sound, bool queued = true)
   {
     if (queued)
     {
-      Task.Factory.StartNew(() =>
+      tasks.Add(Task.Factory.StartNew(() =>
       {
         int all, real;
         do
         {
           System.GetChannelsPlaying(out all, out real);
-        } while (real > 0);
+        } while (real > 1);
         Channel channel = System.PlaySound(sound, paused: false);
         while (channel.IsPlaying) { Thread.Sleep(5); }
-        channel.Stop();
-
-      });
+        try
+        {
+          channel.Stop();
+        }
+        catch { }
+      }));
     }
     else
     {
-      Task.Factory.StartNew(() =>
+      tasks.Add(Task.Factory.StartNew(() =>
       {
         int all, real;
         Channel channel = System.PlaySound(sound, paused: false);
         while (channel.IsPlaying) { Thread.Sleep(5); }
         channel.Stop();
-      });
+      }));
     }
   }
 }
