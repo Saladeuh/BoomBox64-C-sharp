@@ -33,6 +33,7 @@ public class SoundSystem
     LoadSounds(group);
     LoadMusics();
   }
+  private const string CONTENTFOLDER = "Content/";
 
   private void LoadSounds(string group)
   {
@@ -40,7 +41,7 @@ public class SoundSystem
     Channels = new Channel[maxSounds];
     Sound sound;
     var rnd = new Random();
-    var files = Directory.GetFiles(group, "*.wav");
+    var files = Directory.GetFiles(CONTENTFOLDER+group, "*.wav");
     var rndArray = Enumerable.Range(0, files.Length).OrderBy(item => rnd.Next()).ToArray();
     for (int i = 0; i < maxSounds; i++)
     {
@@ -53,14 +54,14 @@ public class SoundSystem
   {
     Musics = new List<Channel>();
     Sound sound;
-    sound = System.CreateStream("music/OTOATE.wav");
+    sound = System.CreateStream(CONTENTFOLDER+"music/OTOATE.wav");
     //PlayQueue(sound);
     Musics.Add(((Channel)System.PlaySound(sound, paused: false)));
-    JingleCaseWin = sound = System.CreateStream("music/Jingle_SLVSTAR1.mp3");
-    JingleCaseLose = sound = System.CreateStream("music/Jingle_DROPSTAR.mp3");
-    JingleWin = sound = System.CreateStream("music/Jingle_MINICLEAR.mp3");
-    JingleLose = sound = System.CreateStream("music/Jingle_MINIOVER.mp3");
-    JingleError = sound = System.CreateStream("music/SM64_Error.ogg");
+    JingleCaseWin = sound = System.CreateStream(CONTENTFOLDER + "music/Jingle_SLVSTAR1.mp3");
+    JingleCaseLose = sound = System.CreateStream(CONTENTFOLDER + "music/Jingle_DROPSTAR.mp3");
+    JingleWin = sound = System.CreateStream(CONTENTFOLDER + "music/Jingle_MINICLEAR.mp3");
+    JingleLose = sound = System.CreateStream(CONTENTFOLDER + "music/Jingle_MINIOVER.mp3");
+    JingleError = sound = System.CreateStream(CONTENTFOLDER + "music/SM64_Error.ogg");
 
   }
   public List<Task> tasks = new List<Task>();
