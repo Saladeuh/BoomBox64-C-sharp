@@ -15,7 +15,7 @@ internal class Level
   private int MaxRetry { get; set; }
   private List<(int, CaseState)> Grid { get; set; }
   public SoundSystem SoundSystem { get; set; }
-  public Level(int nbSounds=3, string group="test", int maxRetry=5)
+  public Level(int nbSounds = 3, string group = "test", int maxRetry = 5)
   {
     NbSounds = nbSounds;
     MaxRetry = maxRetry;
@@ -40,11 +40,11 @@ internal class Level
     do
     {
       keyinfo = Console.ReadKey();
-      if (char.IsDigit(keyinfo.KeyChar) && int.Parse(keyinfo.KeyChar.ToString())<=NbSounds*2)
+      if (char.IsDigit(keyinfo.KeyChar) && int.Parse(keyinfo.KeyChar.ToString()) <= NbSounds * 2)
       {
         int caseIndex = int.Parse(keyinfo.KeyChar.ToString()) - 1;
         int soundIndex = Grid[caseIndex].Item1 - 1;
-        SoundSystem.PlayQueue(SoundSystem.Sounds[soundIndex]);
+        SoundSystem.PlayQueue(SoundSystem.Sounds[soundIndex], queued: false);
         TryCase(soundIndex + 1, caseIndex);
         foreach (var pair in Grid)
         { Console.WriteLine(pair); }
@@ -53,7 +53,8 @@ internal class Level
           Console.WriteLine("gagné!");
           SoundSystem.PlayQueue(SoundSystem.JingleWin);
           return true;
-        } else if (Retry >= MaxRetry)
+        }
+        else if (Retry >= MaxRetry)
         {
           Console.WriteLine("perdu");
           SoundSystem.PlayQueue(SoundSystem.JingleLose);

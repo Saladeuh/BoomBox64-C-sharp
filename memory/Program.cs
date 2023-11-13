@@ -12,8 +12,8 @@ namespace memoryGame
       Level level = new Level(3, randomGroup);
       while (level.PlayLevel())
       {
-        level.SoundSystem.currentThread.Join();
-        level.SoundSystem.System.Release();
+        Task.WaitAll();
+        //level.SoundSystem.System.Release();
         randomGroup = groups[random.Next(groups.Count)];
         level = new Level(4, randomGroup);
       }

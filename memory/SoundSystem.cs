@@ -15,7 +15,6 @@ public class SoundSystem
   public Sound JingleCaseLose { get; private set; }
   public Sound JingleWin { get; private set; }
   public Sound JingleLose { get; private set; }
-  public Thread currentThread { get; private set; }
 
   public SoundSystem(int maxSounds, string group)
   {
@@ -33,15 +32,15 @@ public class SoundSystem
     LoadSounds(group);
     LoadMusics();
   }
-  
+
   private void LoadSounds(string group)
   {
     Sounds = new Sound[maxSounds];
     Channels = new Channel[maxSounds];
     Sound sound;
-    var rnd=new Random();
+    var rnd = new Random();
     var files = Directory.GetFiles(group, "*.wav");
-    var rndArray =Enumerable.Range(0, files.Length).OrderBy(item => rnd.Next()).ToArray();
+    var rndArray = Enumerable.Range(0, files.Length).OrderBy(item => rnd.Next()).ToArray();
     for (int i = 0; i < maxSounds; i++)
     {
       Sounds[i] = sound = System.CreateSound(files[rndArray[i]], Mode._3D | Mode.Loop_Off | Mode._3D_LinearSquareRolloff);
@@ -62,22 +61,32 @@ public class SoundSystem
     JingleLose = sound = System.CreateStream("music/Jingle_MINIOVER.mp3");
   }
 
-  public void PlayQueue(Sound sound)
+  public void PlayQueue(Sound sound, bool queued = true)
   {
-    currentThread = new Thread(() =>
+    if (queued)
     {
-      int all, real;
-      do
+      Task.Factory.StartNew(() =>
       {
-        System.GetChannelsPlaying(out all, out real);
-      } while (real > 0);
-      Channel channel = System.PlaySound(sound, paused: false);
-      if (channel != null)
-      {
-        while (channel.IsPlaying) { Thread.Sleep(10); }
+        int all, real;
+        do
+        {
+          System.GetChannelsPlaying(out all, out real);
+        } while (real > 0);
+        Channel channel = System.PlaySound(sound, paused: false);
+        while (channel.IsPlaying) { Thread.Sleep(5); }
         channel.Stop();
-      }
-    });
-    currentThread.Start();
+
+      });
+    }
+    else
+    {
+      Task.Factory.StartNew(() =>
+      {
+        int all, real;
+        Channel channel = System.PlaySound(sound, paused: false);
+        while (channel.IsPlaying) { Thread.Sleep(5); }
+        channel.Stop();
+      });
+    }
   }
 }
