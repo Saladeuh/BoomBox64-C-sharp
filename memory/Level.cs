@@ -67,9 +67,10 @@ internal class Level
   private void TryCase(int soundIndex, int caseIndex)
   {
     var caseIndexTouched = Util.IndexesWhere(Grid, o => o.Item1 == soundIndex && o.Item2 == CaseState.Touched).ToList();
-    var isACaseTouched = Util.IndexesWhere(Grid, o => o.Item2 == CaseState.Touched).ToList();
-    if (Grid[caseIndex].Item2 == CaseState.Paired)
+    var touchedCases = Util.IndexesWhere(Grid, o => o.Item2 == CaseState.Touched).ToList();
+    if ((Grid[caseIndex].Item2 == CaseState.Paired) || (caseIndexTouched.Count() == 1 && caseIndexTouched.Contains(caseIndex)))
     {
+      SoundSystem.PlayQueue(SoundSystem.JingleError);
       return;
     }
     else if (caseIndexTouched.Count() == 1 && !caseIndexTouched.Contains(caseIndex))
@@ -78,9 +79,9 @@ internal class Level
       Grid[caseIndex] = (soundIndex, CaseState.Paired);
       SoundSystem.PlayQueue(SoundSystem.JingleCaseWin);
     }
-    else if (isACaseTouched.Count() == 1)
+    else if (touchedCases.Count() == 1)
     {
-      Grid[isACaseTouched[0]] = (Grid[isACaseTouched[0]].Item1, CaseState.None);
+      Grid[touchedCases[0]] = (Grid[touchedCases[0]].Item1, CaseState.None);
       Retry++;
       SoundSystem.PlayQueue(SoundSystem.JingleCaseLose);
     }

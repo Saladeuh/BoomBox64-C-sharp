@@ -15,6 +15,7 @@ public class SoundSystem
   public Sound JingleCaseLose { get; private set; }
   public Sound JingleWin { get; private set; }
   public Sound JingleLose { get; private set; }
+  public Sound JingleError { get; private set; }
 
   public SoundSystem(int maxSounds, string group)
   {
@@ -59,6 +60,8 @@ public class SoundSystem
     JingleCaseLose = sound = System.CreateStream("music/Jingle_DROPSTAR.mp3");
     JingleWin = sound = System.CreateStream("music/Jingle_MINICLEAR.mp3");
     JingleLose = sound = System.CreateStream("music/Jingle_MINIOVER.mp3");
+    JingleError = sound = System.CreateStream("music/SM64_Error.ogg");
+
   }
   public List<Task> tasks = new List<Task>();
   public void PlayQueue(Sound sound, bool queued = true)
