@@ -7,9 +7,9 @@ public class SoundSystem
   public FmodSystem System { get; }
   public Sound[] Sounds { get; set; }
   public Channel[] Channels { get; set; }
-  private Vector3 ListenerPos = new Vector3() { Z = -1.0f };
-  public Vector3 Up = new Vector3(0, 1, 0), Forward = new Vector3(0, 0, -1);
-  public int maxSounds { get; set; }
+  private Vector3 ListenerPos = new() { Z = -1.0f };
+  public Vector3 Up = new(0, 1, 0), Forward = new(0, 0, -1);
+  public int MaxSounds { get; set; }
   public List<Channel> Musics { get; private set; }
   public Sound JingleCaseWin { get; private set; }
   public Sound JingleCaseLose { get; private set; }
@@ -28,7 +28,7 @@ public class SoundSystem
     System.Set3DSettings(1.0f, 1.0f, 1.0f);
     System.Set3DListenerAttributes(0, in ListenerPos, default, in Forward, in Up);
     //Load sounds
-    this.maxSounds = maxSounds;
+    this.MaxSounds = maxSounds;
     Sounds = new Sound[maxSounds];
     LoadSounds(group);
     Musics = new List<Channel>();
@@ -38,12 +38,12 @@ public class SoundSystem
 
   private void LoadSounds(string group)
   {
-    Channels = new Channel[maxSounds];
+    Channels = new Channel[MaxSounds];
     Sound sound;
     var rnd = new Random();
     var files = Directory.GetFiles(CONTENTFOLDER + group, "*.wav");
     var rndArray = Enumerable.Range(0, files.Length).OrderBy(item => rnd.Next()).ToArray();
-    for (int i = 0; i < maxSounds; i++)
+    for (int i = 0; i < MaxSounds; i++)
     {
       Sounds[i] = sound = System.CreateSound(files[rndArray[i]], Mode._3D | Mode.Loop_Off | Mode._3D_LinearSquareRolloff);
       //Channels[i] = System.PlaySound(sound, paused: true);
@@ -63,17 +63,17 @@ public class SoundSystem
     JingleError = sound = System.CreateStream(CONTENTFOLDER + "music/SM64_Error.ogg");
 
   }
-  public List<Task> tasks = new List<Task>();
+  public List<Task> tasks = new();
   public void PlayQueue(Sound sound, bool queued = true)
   {
     if (queued)
     {
       tasks.Add(Task.Factory.StartNew(() =>
       {
-        int all, real;
+        int real;
         do
         {
-          System.GetChannelsPlaying(out all, out real);
+          System.GetChannelsPlaying(out int all, out real);
         } while (real > 1);
         Channel? channel = System.PlaySound(sound, paused: false);
         if (channel != null)
