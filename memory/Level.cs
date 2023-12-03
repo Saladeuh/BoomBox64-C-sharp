@@ -10,7 +10,7 @@ internal class Level
   private int MaxRetry { get; set; }
   private List<(int, CaseState)> Grid { get; set; }
   public SoundSystem SoundSystem { get; set; }
-  public Level(int nbSounds = 3, string group = "test", int maxRetry = 5)
+  public Level(int nbSounds, string group, int maxRetry)
   {
     NbSounds = nbSounds;
     MaxRetry = maxRetry;
@@ -47,12 +47,14 @@ internal class Level
         {
           Console.WriteLine("gagné!");
           SoundSystem.PlayQueue(SoundSystem.JingleWin);
+          this.Release();
           return true;
         }
         else if (Retry >= MaxRetry)
         {
           Console.WriteLine("perdu");
           SoundSystem.PlayQueue(SoundSystem.JingleLose);
+          this.Release();
           return false;
         }
       }
