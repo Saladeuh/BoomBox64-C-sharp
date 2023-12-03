@@ -1,4 +1,5 @@
-﻿using memory;
+﻿using System.Reflection.Emit;
+using memory;
 
 namespace memoryGame;
 
@@ -13,6 +14,7 @@ internal class Level
   {
     NbSounds = nbSounds;
     MaxRetry = maxRetry;
+    Grid = new List<(int, CaseState)>();
     FillGridByRandomInt();
     SoundSystem = new SoundSystem(nbSounds, group);
   }
@@ -20,7 +22,6 @@ internal class Level
   {
     var rnd = new Random();
     var randomDisposition = Enumerable.Range(1, NbSounds).Concat(Enumerable.Range(1, NbSounds)).OrderBy(r => rnd.Next()).ToArray();
-    Grid = new List<(int, CaseState)>();
     foreach (int n in randomDisposition)
     {
       Grid.Add((n, CaseState.None));
@@ -62,27 +63,32 @@ internal class Level
   {
     var caseIndexTouched = Util.IndexesWhere(Grid, o => o.Item1 == soundIndex && o.Item2 == CaseState.Touched).ToList();
     var touchedCases = Util.IndexesWhere(Grid, o => o.Item2 == CaseState.Touched).ToList();
-    if ((Grid[caseIndex].Item2 == CaseState.Paired) || (caseIndexTouched.Count() == 1 && caseIndexTouched.Contains(caseIndex)))
+    if ((Grid[caseIndex].Item2 == CaseState.Paired) || (caseIndexTouched.Count == 1 && caseIndexTouched.Contains(caseIndex)))
     {
       SoundSystem.PlayQueue(SoundSystem.JingleError);
       return;
     }
-    else if (caseIndexTouched.Count() == 1 && !caseIndexTouched.Contains(caseIndex))
+    else if (caseIndexTouched.Count == 1 && !caseIndexTouched.Contains(caseIndex))
     {
       Grid[caseIndexTouched[0]] = (soundIndex, CaseState.Paired);
       Grid[caseIndex] = (soundIndex, CaseState.Paired);
       SoundSystem.PlayQueue(SoundSystem.JingleCaseWin);
     }
-    else if (touchedCases.Count() == 1)
+    else if (touchedCases.Count == 1)
     {
       Grid[touchedCases[0]] = (Grid[touchedCases[0]].Item1, CaseState.None);
       Retry++;
       SoundSystem.PlayQueue(SoundSystem.JingleCaseLose);
     }
-    else if (caseIndexTouched.Count() == 0)
+    else if (caseIndexTouched.Count == 0)
     {
       Grid[caseIndex] = (Grid[caseIndex].Item1, CaseState.Touched);
     }
   }
-
+  public void Release()
+  {
+    Task.WaitAll(SoundSystem.tasks.ToArray());
+    SoundSystem.Musics[0].Stop();
+    SoundSystem.System.Release();
+  }
 }
