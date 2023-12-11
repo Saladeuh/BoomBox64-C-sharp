@@ -27,6 +27,12 @@ internal class MainMenu
         case ConsoleKey.Enter:
           PlayGame();
           break;
+        case ConsoleKey.F2:
+          SoundSystem.Volume -= 0.1f;
+          break;
+        case ConsoleKey.F3:
+          SoundSystem.Volume += 0.1f;
+          break;
       }
     } while (keyinfo.Key != ConsoleKey.Escape);
   }

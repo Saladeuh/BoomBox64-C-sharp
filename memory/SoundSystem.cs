@@ -17,14 +17,14 @@ public class SoundSystem
   public Sound JingleWin { get; private set; }
   public Sound JingleLose { get; private set; }
   public Sound JingleError { get; private set; }
-
+  public float Volume { get { return System.MasterSoundGroup.GetValueOrDefault().Volume; } set { System.MasterSoundGroup.GetValueOrDefault().Volume = value; } }
   public SoundSystem()
   {
     //Creates the FmodSystem object
     System = FmodAudio.Fmod.CreateSystem();
     //System object Initialization
     System.Init(4093, InitFlags._3D_RightHanded);
-    System.MasterSoundGroup.GetValueOrDefault().Volume = 0.5f;
+    Volume = 0.5f;
     //Set the distance Units (Meters/Feet etc)
     System.Set3DSettings(1.0f, 1.0f, 1.0f);
     System.Set3DListenerAttributes(0, in ListenerPos, default, in Forward, in Up);
@@ -45,7 +45,10 @@ public class SoundSystem
   }
   public void LoadMenu()
   {
-    LoadMenuMusics();
+    if (!Musics.Any())
+    {
+      LoadMenuMusics();
+    }
   }
   private void LoadLevelSounds(string group)
   {
