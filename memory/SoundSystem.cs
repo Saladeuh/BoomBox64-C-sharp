@@ -78,8 +78,11 @@ public class SoundSystem
   private void LoadMenuMusics()
   {
     Sound sound;
-    sound = System.CreateStream(CONTENTFOLDER + "music/PLAYROOM.mp3");
-    Musics.Add((Channel?)System.PlaySound(sound, paused: false));
+    sound = System.CreateStream(CONTENTFOLDER + "music/PLAYROOM.mp3", Mode.Loop_Normal);
+    Channel? channel = (Channel?)System.PlaySound(sound, paused: false);
+    channel.LoopCount = -1;
+    channel.SetLoopPoints(TimeUnit.MS, 0, TimeUnit.MS, 31623);
+    Musics.Add(channel);
   }
 
   public List<Task> tasks = new();
