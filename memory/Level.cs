@@ -10,14 +10,14 @@ internal class Level
   private int MaxRetry { get; set; }
   private List<(int, CaseState)> Grid { get; set; }
   public SoundSystem SoundSystem { get; set; }
-  public Level(int nbSounds, string group, int maxRetry)
+  public Level(SoundSystem soundSystem, int nbSounds, string group, int maxRetry)
   {
     NbSounds = nbSounds;
     MaxRetry = maxRetry;
     Grid = new List<(int, CaseState)>();
     FillGridByRandomInt();
-    SoundSystem = new SoundSystem();
-    SoundSystem.Load(nbSounds, group);
+    SoundSystem = soundSystem;
+    SoundSystem.LoadLevel(nbSounds, group);
   }
   public void FillGridByRandomInt()
   {
@@ -89,7 +89,7 @@ internal class Level
   public void Release()
   {
     Task.WaitAll(SoundSystem.tasks.ToArray());
-    SoundSystem.Musics[0].Stop();
-    SoundSystem.System.Release();
+    SoundSystem.FreeRessources();
+    //SoundSystem.System.Release();
   }
 }

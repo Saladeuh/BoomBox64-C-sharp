@@ -4,6 +4,7 @@ using FmodAudio;
 namespace memoryGame;
 public class SoundSystem
 {
+  private const string CONTENTFOLDER = "Content/";
   public FmodSystem System { get; }
   public Sound[] Sounds { get; set; }
   public Channel[] Channels { get; set; }
@@ -32,20 +33,21 @@ public class SoundSystem
     Musics = new List<Channel>();
   }
 
-  public void Load(int maxSounds, string group)
+  public void LoadLevel(int maxSounds, string group)
   {
     //Load sounds
     this.MaxSounds = maxSounds;
     Sounds = new Sound[maxSounds];
-    LoadSounds(group);
+    LoadLevelSounds(group);
     Musics = new List<Channel>();
     Channels = new Channel[MaxSounds];
-    LoadMusics();
+    LoadLevelMusics();
   }
-
-  private const string CONTENTFOLDER = "Content/";
-
-  private void LoadSounds(string group)
+  public void LoadMenu()
+  {
+    LoadMenuMusics();
+  }
+  private void LoadLevelSounds(string group)
   {
     Sound sound;
     var rnd = new Random();
@@ -58,7 +60,7 @@ public class SoundSystem
       //Channels[i].Volume = 0.5f;
     }
   }
-  private void LoadMusics()
+  private void LoadLevelMusics()
   {
     Sound sound;
     sound = System.CreateStream(CONTENTFOLDER + "music/OTOATE.wav");
@@ -69,8 +71,14 @@ public class SoundSystem
     JingleWin = System.CreateStream(CONTENTFOLDER + "music/Jingle_MINICLEAR.mp3");
     JingleLose = System.CreateStream(CONTENTFOLDER + "music/Jingle_MINIOVER.mp3");
     JingleError = System.CreateStream(CONTENTFOLDER + "music/SM64_Error.ogg");
-
   }
+  private void LoadMenuMusics()
+  {
+    Sound sound;
+    sound = System.CreateStream(CONTENTFOLDER + "music/PLAYROOM.mp3");
+    Musics.Add((Channel?)System.PlaySound(sound, paused: false));
+  }
+
   public List<Task> tasks = new();
   public void PlayQueue(Sound sound, bool queued = true)
   {
@@ -107,5 +115,13 @@ public class SoundSystem
         }
       }));
     }
+  }
+  public void FreeRessources()
+  {
+    Musics.ForEach((music) =>
+    {
+      if (music != null) music.Stop();
+    });
+    Musics.Clear();
   }
 }
