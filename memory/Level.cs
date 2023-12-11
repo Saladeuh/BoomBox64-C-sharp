@@ -27,11 +27,9 @@ internal class Level
       Grid.Add((n, CaseState.None));
     }
   }
-  public bool PlayLevel()
+  public bool Play()
   {
     ConsoleKeyInfo keyinfo;
-    foreach (var pair in Grid)
-    { Console.WriteLine(pair); }
     do
     {
       keyinfo = Console.ReadKey();
