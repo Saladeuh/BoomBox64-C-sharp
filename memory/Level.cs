@@ -16,7 +16,8 @@ internal class Level
     MaxRetry = maxRetry;
     Grid = new List<(int, CaseState)>();
     FillGridByRandomInt();
-    SoundSystem = new SoundSystem(nbSounds, group);
+    SoundSystem = new SoundSystem();
+    SoundSystem.Load(nbSounds, group);
   }
   public void FillGridByRandomInt()
   {

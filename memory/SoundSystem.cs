@@ -17,7 +17,7 @@ public class SoundSystem
   public Sound JingleLose { get; private set; }
   public Sound JingleError { get; private set; }
 
-  public SoundSystem(int maxSounds, string group)
+  public SoundSystem()
   {
     //Creates the FmodSystem object
     System = FmodAudio.Fmod.CreateSystem();
@@ -27,6 +27,13 @@ public class SoundSystem
     //Set the distance Units (Meters/Feet etc)
     System.Set3DSettings(1.0f, 1.0f, 1.0f);
     System.Set3DListenerAttributes(0, in ListenerPos, default, in Forward, in Up);
+    Sounds = Array.Empty<Sound>();
+    Channels = Array.Empty<Channel>();
+    Musics = new List<Channel>();
+  }
+
+  public void Load(int maxSounds, string group)
+  {
     //Load sounds
     this.MaxSounds = maxSounds;
     Sounds = new Sound[maxSounds];
@@ -35,6 +42,7 @@ public class SoundSystem
     Channels = new Channel[MaxSounds];
     LoadMusics();
   }
+
   private const string CONTENTFOLDER = "Content/";
 
   private void LoadSounds(string group)
