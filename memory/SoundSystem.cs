@@ -66,9 +66,10 @@ public class SoundSystem
   private void LoadLevelMusics()
   {
     Sound sound;
-    sound = System.CreateStream(CONTENTFOLDER + "music/OTOATE.wav");
-    //PlayQueue(sound);
-    Musics.Add((Channel?)System.PlaySound(sound, paused: false));
+    sound = System.CreateStream(CONTENTFOLDER + "music/OTOATE.wav", Mode.Loop_Normal);
+    Channel channel = System.PlaySound(sound, paused: false);
+    channel.SetLoopPoints(TimeUnit.MS, 5201, TimeUnit.MS, sound.GetLength(TimeUnit.MS)-1);
+    Musics.Add(channel);
     JingleCaseWin = System.CreateStream(CONTENTFOLDER + "music/Jingle_SLVSTAR1.mp3");
     JingleCaseLose = System.CreateStream(CONTENTFOLDER + "music/Jingle_DROPSTAR.mp3");
     JingleWin = System.CreateStream(CONTENTFOLDER + "music/Jingle_MINICLEAR.mp3");
