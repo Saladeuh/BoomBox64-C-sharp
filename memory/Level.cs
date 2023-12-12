@@ -3,13 +3,13 @@ using memory;
 
 namespace memoryGame;
 
-internal class Level
+internal class Level : IGlobabConsoleActions
 {
   private int Retry { get; set; }
   public int NbSounds { get; }
   private int MaxRetry { get; set; }
   private List<(int, CaseState)> Grid { get; set; }
-  public SoundSystem SoundSystem { get; set; }
+  public override SoundSystem SoundSystem { get; set; }
   public Level(SoundSystem soundSystem, int nbSounds, string group, int maxRetry)
   {
     NbSounds = nbSounds;
@@ -33,6 +33,7 @@ internal class Level
     ConsoleKeyInfo keyinfo;
     do
     {
+      Console.Clear();
       keyinfo = Console.ReadKey();
       if (char.IsDigit(keyinfo.KeyChar) && int.Parse(keyinfo.KeyChar.ToString()) <= NbSounds * 2)
       {
@@ -40,8 +41,6 @@ internal class Level
         int soundIndex = Grid[caseIndex].Item1 - 1;
         SoundSystem.PlayQueue(SoundSystem.Sounds[soundIndex], queued: false);
         TryCase(soundIndex + 1, caseIndex);
-        foreach (var pair in Grid)
-        { Console.WriteLine(pair); }
         if (Grid.All(pair => pair.Item2 == CaseState.Paired))
         {
           Console.WriteLine("gagné!");
@@ -57,6 +56,7 @@ internal class Level
           return false;
         }
       }
+      GlobalActions(keyinfo.Key);
     } while (keyinfo.Key != ConsoleKey.X);
     return false;
   }

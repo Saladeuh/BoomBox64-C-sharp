@@ -8,9 +8,10 @@ using memoryGame;
 
 namespace memory;
 
-internal class MainMenu
+internal class MainMenu: IGlobabConsoleActions
 {
-  public SoundSystem SoundSystem { get; set; }
+  public override SoundSystem SoundSystem { get; set; }
+
   public MainMenu()
   {
     SoundSystem = new SoundSystem();
@@ -25,17 +26,20 @@ internal class MainMenu
       switch (keyinfo.Key)
       {
         case ConsoleKey.Enter:
+        case ConsoleKey.Spacebar:
           PlayGame();
           break;
-        case ConsoleKey.F2:
-          SoundSystem.Volume -= 0.1f;
+        case ConsoleKey.F1:
+        case ConsoleKey.H:
+          Console.WriteLine("Aide");
           break;
-        case ConsoleKey.F3:
-          SoundSystem.Volume += 0.1f;
+        default:
+          GlobalActions(keyinfo.Key);
           break;
       }
     } while (keyinfo.Key != ConsoleKey.Escape);
   }
+
   public void PlayGame()
   {
     SoundSystem.FreeRessources();
