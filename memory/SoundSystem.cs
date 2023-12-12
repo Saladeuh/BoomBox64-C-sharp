@@ -70,11 +70,11 @@ public class SoundSystem
     Channel channel = System.PlaySound(sound, paused: false);
     channel.SetLoopPoints(TimeUnit.MS, 5201, TimeUnit.MS, sound.GetLength(TimeUnit.MS)-1);
     Musics.Add(channel);
-    JingleCaseWin = System.CreateStream(CONTENTFOLDER + "music/Jingle_SLVSTAR1.mp3");
-    JingleCaseLose = System.CreateStream(CONTENTFOLDER + "music/Jingle_DROPSTAR.mp3");
-    JingleWin = System.CreateStream(CONTENTFOLDER + "music/Jingle_MINICLEAR.mp3");
-    JingleLose = System.CreateStream(CONTENTFOLDER + "music/Jingle_MINIOVER.mp3");
-    JingleError = System.CreateStream(CONTENTFOLDER + "music/SM64_Error.ogg");
+    JingleCaseWin = System.CreateSound(CONTENTFOLDER + "music/Jingle_SLVSTAR1.mp3");
+    JingleCaseLose = System.CreateSound(CONTENTFOLDER + "music/Jingle_DROPSTAR.mp3");
+    JingleWin = System.CreateSound(CONTENTFOLDER + "music/Jingle_MINICLEAR.mp3");
+    JingleLose = System.CreateSound(CONTENTFOLDER + "music/Jingle_MINIOVER.mp3");
+    JingleError = System.CreateSound(CONTENTFOLDER + "music/SM64_Error.ogg");
   }
   private void LoadMenuMusics()
   {
@@ -127,7 +127,7 @@ public class SoundSystem
   {
     Musics.ForEach((music) =>
     {
-      if (music != null) music.Stop();
+      music?.Stop();
     });
     Musics.Clear();
   }
