@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
@@ -17,6 +17,7 @@
 			<Visible>false</Visible>
 			<TargetPath>fmod.dll</TargetPath>
 		</ContentWithTargetPath>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<Reference Include="FmodAudio">
 			<HintPath>Libs\FmodAudio.dll</HintPath>
 		</Reference>

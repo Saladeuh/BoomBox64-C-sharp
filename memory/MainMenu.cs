@@ -11,12 +11,13 @@ namespace memory;
 internal class MainMenu: IGlobabConsoleActions
 {
   public override SoundSystem SoundSystem { get; set; }
-
-  public MainMenu()
+  public int Score { get; set; }
+  public MainMenu(Parameters parameters)
   {
-    SoundSystem = new SoundSystem();
+    SoundSystem = new SoundSystem(parameters.Volume);
+    Score = parameters.Score;
   }
-  public void Run()
+  public Parameters Run()
   {
     ConsoleKeyInfo keyinfo;
     do
@@ -38,6 +39,7 @@ internal class MainMenu: IGlobabConsoleActions
           break;
       }
     } while (keyinfo.Key != ConsoleKey.Escape);
+    return new Parameters { Score = Score, Volume=SoundSystem.Volume };
   }
 
   public void PlayGame()

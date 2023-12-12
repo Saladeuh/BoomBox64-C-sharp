@@ -18,13 +18,13 @@ public class SoundSystem
   public Sound JingleLose { get; private set; }
   public Sound JingleError { get; private set; }
   public float Volume { get { return System.MasterSoundGroup.GetValueOrDefault().Volume; } set { System.MasterSoundGroup.GetValueOrDefault().Volume = value; } }
-  public SoundSystem()
+  public SoundSystem(float initialVolume)
   {
     //Creates the FmodSystem object
     System = FmodAudio.Fmod.CreateSystem();
     //System object Initialization
     System.Init(4093, InitFlags._3D_RightHanded);
-    Volume = 0.5f;
+    Volume = initialVolume;
     //Set the distance Units (Meters/Feet etc)
     System.Set3DSettings(1.0f, 1.0f, 1.0f);
     System.Set3DListenerAttributes(0, in ListenerPos, default, in Forward, in Up);
