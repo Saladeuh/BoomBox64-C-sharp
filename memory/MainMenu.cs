@@ -8,14 +8,14 @@ using memoryGame;
 
 namespace memory;
 
-internal class MainMenu: IGlobabConsoleActions
+internal class MainMenu : IGlobabConsoleActions
 {
   public override SoundSystem SoundSystem { get; set; }
-  public int Score { get; set; }
+  public int MaxScore { get; set; }
   public MainMenu(Parameters parameters)
   {
     SoundSystem = new SoundSystem(parameters.Volume);
-    Score = parameters.Score;
+    MaxScore = parameters.Score;
   }
   public Parameters Run()
   {
@@ -28,7 +28,8 @@ internal class MainMenu: IGlobabConsoleActions
       {
         case ConsoleKey.Enter:
         case ConsoleKey.Spacebar:
-          PlayGame();
+          int score = PlayGame();
+          if (this.MaxScore < score) MaxScore = score;
           break;
         case ConsoleKey.F1:
         case ConsoleKey.H:
@@ -39,10 +40,10 @@ internal class MainMenu: IGlobabConsoleActions
           break;
       }
     } while (keyinfo.Key != ConsoleKey.Escape);
-    return new Parameters { Score = Score, Volume=SoundSystem.Volume };
+    return new Parameters { Score = MaxScore, Volume = SoundSystem.Volume };
   }
 
-  public void PlayGame()
+  public int PlayGame()
   {
     SoundSystem.FreeRessources();
     var random = new Random();
@@ -62,5 +63,6 @@ internal class MainMenu: IGlobabConsoleActions
         level = new(SoundSystem, 4, randomGroup, 3);
       }
     } while (level.Play());
+    return score;
   }
 }
