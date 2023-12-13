@@ -53,15 +53,27 @@ internal class MainMenu : IGlobabConsoleActions
     do
     {
       score++;
-      var randomGroup = groups[random.Next(groups.Count)];
-      if (score % 4 == 0 || score == 1)
+      var group1 = groups[random.Next(groups.Count)];
+     string? group2 = null;
+      int nbSounds = 4;
+      int maxRetry = 3;
+      if (score % 2 == 0)
       {
-        level = new(SoundSystem, 3, groups[0], 3);
+        do
+        {
+          group2 = groups[random.Next(groups.Count)];
+        } while (group1 == group2);
       }
-      else
+      else if (score % 3 == 0 || score == 0)
       {
-        level = new(SoundSystem, 4, randomGroup, 3);
+        nbSounds = 3;
+        group1 = groups[0];
       }
+      if (score < 4)
+      {
+        maxRetry = 3;
+      }
+      level = new(SoundSystem, nbSounds, maxRetry, group1, group2);
     } while (level.Play());
     return score;
   }

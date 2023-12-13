@@ -33,12 +33,12 @@ public class SoundSystem
     Musics = new List<Channel>();
   }
 
-  public void LoadLevel(int maxSounds, string group)
+  public void LoadLevel(int maxSounds, string group1, string? group2 = null)
   {
     //Load sounds
     this.MaxSounds = maxSounds;
     Sounds = new Sound[maxSounds];
-    LoadLevelSounds(group);
+    LoadLevelSounds(group1, group2);
     Musics = new List<Channel>();
     Channels = new Channel[MaxSounds];
     LoadLevelMusics();
@@ -50,17 +50,30 @@ public class SoundSystem
       LoadMenuMusics();
     }
   }
-  private void LoadLevelSounds(string group)
+  private void LoadLevelSounds(string group1, string? group2)
   {
     Sound sound;
     var rnd = new Random();
-    var files = Directory.GetFiles(CONTENTFOLDER + group, "*.wav");
-    var rndArray = Enumerable.Range(0, files.Length).OrderBy(item => rnd.Next()).ToArray();
-    for (int i = 0; i < MaxSounds; i++)
+    if (group2 == null)
     {
-      Sounds[i] = sound = System.CreateSound(files[rndArray[i]], Mode._3D | Mode.Loop_Off | Mode._3D_LinearSquareRolloff);
-      //Channels[i] = System.PlaySound(sound, paused: true);
-      //Channels[i].Volume = 0.5f;
+      var files = Directory.GetFiles(CONTENTFOLDER + group1, "*.wav");
+      var rndArray = Enumerable.Range(0, files.Length).OrderBy(item => rnd.Next()).ToArray();
+      for (int i = 0; i < MaxSounds; i++)
+      {
+        Sounds[i] = sound = System.CreateSound(files[rndArray[i]], Mode._3D | Mode.Loop_Off | Mode._3D_LinearSquareRolloff);
+      }
+    }
+    else
+    {
+      var files1 = Directory.GetFiles(CONTENTFOLDER + group1, "*.wav");
+      var rndArray1 = Enumerable.Range(0, files1.Length).OrderBy(item => rnd.Next()).ToArray();
+      var files2 = Directory.GetFiles(CONTENTFOLDER + group2, "*.wav");
+      var rndArray2 = Enumerable.Range(0, files2.Length).OrderBy(item => rnd.Next()).ToArray();
+      for (int i = 0; i < MaxSounds; i++)
+      {
+        if (i % 2 == 0) Sounds[i] = sound = System.CreateSound(files1[rndArray1[i]], Mode._3D | Mode.Loop_Off | Mode._3D_LinearSquareRolloff);
+        else Sounds[i] = sound = System.CreateSound(files2[rndArray2[i]], Mode._3D | Mode.Loop_Off | Mode._3D_LinearSquareRolloff);
+      }
     }
   }
   private void LoadLevelMusics()
@@ -68,7 +81,7 @@ public class SoundSystem
     Sound sound;
     sound = System.CreateStream(CONTENTFOLDER + "music/OTOATE.wav", Mode.Loop_Normal);
     Channel channel = System.PlaySound(sound, paused: false);
-    channel.SetLoopPoints(TimeUnit.MS, 5201, TimeUnit.MS, sound.GetLength(TimeUnit.MS)-1);
+    channel.SetLoopPoints(TimeUnit.MS, 5201, TimeUnit.MS, sound.GetLength(TimeUnit.MS) - 1);
     Musics.Add(channel);
     JingleCaseWin = System.CreateSound(CONTENTFOLDER + "music/Jingle_SLVSTAR1.mp3");
     JingleCaseLose = System.CreateSound(CONTENTFOLDER + "music/Jingle_DROPSTAR.mp3");

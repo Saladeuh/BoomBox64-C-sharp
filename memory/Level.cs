@@ -10,14 +10,14 @@ internal class Level : IGlobabConsoleActions
   private int MaxRetry { get; set; }
   private List<(int, CaseState)> Grid { get; set; }
   public override SoundSystem SoundSystem { get; set; }
-  public Level(SoundSystem soundSystem, int nbSounds, string group, int maxRetry)
+  public Level(SoundSystem soundSystem, int nbSounds, int maxRetry, string group1, string? group2=null)
   {
     NbSounds = nbSounds;
     MaxRetry = maxRetry;
     Grid = new List<(int, CaseState)>();
     FillGridByRandomInt();
     SoundSystem = soundSystem;
-    SoundSystem.LoadLevel(nbSounds, group);
+    SoundSystem.LoadLevel(nbSounds, group1, group2);
   }
   public void FillGridByRandomInt()
   {
