@@ -47,7 +47,7 @@ internal class MainMenu : IGlobabConsoleActions
   {
     SoundSystem.FreeRessources();
     var random = new Random();
-    var groups = new List<string> { "misc64", "mario", "wario", "yoshi", "luigi" };
+    var groups = new List<string> { "misc64", "mario", "wario", "yoshi", "luigi", "red_coin" };
     int score = -1;
     Level level;
     do
