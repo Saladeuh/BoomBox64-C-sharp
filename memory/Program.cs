@@ -1,5 +1,9 @@
-﻿using System.Reflection.Emit;
+﻿using System.Globalization;
+using System.Reflection.Emit;
+using LocalizationCultureCore.StringLocalizer;
 using memoryGame;
+using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace memory;
@@ -7,7 +11,6 @@ namespace memory;
 internal class Program
 {
   private const string DATAFILEPATH = "data.json";
-
   static void Main()
   {
     var parameters = LoadJson();

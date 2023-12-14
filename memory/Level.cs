@@ -1,5 +1,6 @@
 ﻿using System.Reflection.Emit;
 using memory;
+using Microsoft.Extensions.Localization;
 
 namespace memoryGame;
 
@@ -43,14 +44,14 @@ internal class Level : IGlobabConsoleActions
         TryCase(soundIndex + 1, caseIndex);
         if (Grid.All(pair => pair.Item2 == CaseState.Paired))
         {
-          Console.WriteLine("gagné!");
+          Console.WriteLine(Localizer.GetString("win"));
           SoundSystem.PlayQueue(SoundSystem.JingleWin);
           this.Release();
           return true;
         }
         else if (Retry >= MaxRetry)
         {
-          Console.WriteLine("perdu");
+          Console.WriteLine(Localizer.GetString("lose"));
           SoundSystem.PlayQueue(SoundSystem.JingleLose);
           this.Release();
           return false;

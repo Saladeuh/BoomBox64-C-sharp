@@ -12,11 +12,16 @@
 		</Content>
 	</ItemGroup>
 	<ItemGroup>
+	  <None Remove="Content\EN.json" />
+	  <None Remove="Content\FR.json" />
+	</ItemGroup>
+	<ItemGroup>
 		<ContentWithTargetPath Include=".\Libs\fmod.dll">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<Visible>false</Visible>
 			<TargetPath>fmod.dll</TargetPath>
 		</ContentWithTargetPath>
+		<PackageReference Include="LocalizationCultureCore" Version="1.1.2" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<Reference Include="FmodAudio">
 			<HintPath>Libs\FmodAudio.dll</HintPath>
