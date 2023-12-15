@@ -1,4 +1,5 @@
 {
     "win": "You win!",
-    "lose": "You lose."
+    "lose": "You lose.",
+    "changeLang": "Change the language by pressing the corresponding number."
 }

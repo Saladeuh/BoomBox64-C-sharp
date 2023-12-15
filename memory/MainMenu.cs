@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FmodAudio;
 using memoryGame;
+using Microsoft.Extensions.Localization;
 
 namespace memory;
 
@@ -35,12 +37,35 @@ internal class MainMenu : IGlobabConsoleActions
         case ConsoleKey.H:
           Console.WriteLine("Aide");
           break;
+        case ConsoleKey.L:
+        case ConsoleKey.F5:
+          ChangeLanguageMenu();
+          break;
         default:
           GlobalActions(keyinfo.Key);
           break;
       }
     } while (keyinfo.Key != ConsoleKey.Escape);
     return new Parameters { Score = MaxScore, Volume = SoundSystem.Volume };
+  }
+
+  private void ChangeLanguageMenu()
+  {
+    Console.WriteLine(this.Localizer.GetString("changeLang"));
+    for (int i = 0; i < SUPPORTEDLANGUAGES.Length; i++)
+    {
+      Console.WriteLine($"{i}: {SUPPORTEDLANGUAGES[i]}");
+    }
+    ConsoleKeyInfo keyinfo;
+    do
+    {
+      keyinfo = Console.ReadKey();
+      if (char.IsDigit(keyinfo.KeyChar) && int.Parse(keyinfo.KeyChar.ToString()) < SUPPORTEDLANGUAGES.Length)
+      {
+        CultureInfo.CurrentUICulture = new CultureInfo(SUPPORTEDLANGUAGES[Int32.Parse(keyinfo.KeyChar.ToString())]);
+        break;
+      }
+    } while (keyinfo.Key != ConsoleKey.Escape);
   }
 
   public int PlayGame()
@@ -54,7 +79,7 @@ internal class MainMenu : IGlobabConsoleActions
     {
       score++;
       var group1 = groups[random.Next(groups.Count)];
-     string? group2 = null;
+      string? group2 = null;
       int nbSounds = 4;
       int maxRetry = 3;
       if (score % 2 == 0)

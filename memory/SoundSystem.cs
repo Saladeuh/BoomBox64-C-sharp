@@ -18,6 +18,7 @@ public class SoundSystem
   public Sound JingleLose { get; private set; }
   public Sound JingleError { get; private set; }
   public float Volume { get { return System.MasterSoundGroup.GetValueOrDefault().Volume; } set { System.MasterSoundGroup.GetValueOrDefault().Volume = value; } }
+
   public SoundSystem(float initialVolume)
   {
     //Creates the FmodSystem object
@@ -45,9 +46,13 @@ public class SoundSystem
   }
   public void LoadMenu()
   {
+    Sound sound;
     if (!Musics.Any())
     {
-      LoadMenuMusics();
+      sound = System.CreateStream(CONTENTFOLDER + "music/PLAYROOM.mp3", Mode.Loop_Normal);
+      Channel? channel = (Channel?)System.PlaySound(sound, paused: false);
+      channel.SetLoopPoints(TimeUnit.MS, 0, TimeUnit.MS, 31623);
+      Musics.Add(channel);
     }
   }
   private void LoadLevelSounds(string group1, string? group2)
@@ -60,7 +65,7 @@ public class SoundSystem
       var rndArray = Enumerable.Range(0, files.Length).OrderBy(item => rnd.Next()).ToArray();
       for (int i = 0; i < MaxSounds; i++)
       {
-        Sounds[i] = sound = System.CreateSound(files[rndArray[i]], Mode._3D | Mode.Loop_Off | Mode._3D_LinearSquareRolloff);
+        Sounds[i] = sound = System.CreateSound(files[rndArray[i]], Mode.Loop_Off);
       }
     }
     else
@@ -88,15 +93,6 @@ public class SoundSystem
     JingleWin = System.CreateSound(CONTENTFOLDER + "music/Jingle_MINICLEAR.mp3");
     JingleLose = System.CreateSound(CONTENTFOLDER + "music/Jingle_MINIOVER.mp3");
     JingleError = System.CreateSound(CONTENTFOLDER + "music/SM64_Error.ogg");
-  }
-  private void LoadMenuMusics()
-  {
-    Sound sound;
-    sound = System.CreateStream(CONTENTFOLDER + "music/PLAYROOM.mp3", Mode.Loop_Normal);
-    Channel? channel = (Channel?)System.PlaySound(sound, paused: false);
-    channel.LoopCount = -1;
-    channel.SetLoopPoints(TimeUnit.MS, 0, TimeUnit.MS, 31623);
-    Musics.Add(channel);
   }
 
   public List<Task> tasks = new();
