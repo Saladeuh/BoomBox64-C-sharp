@@ -24,7 +24,6 @@ internal class MainMenu : IGlobabConsoleActions
     ConsoleKeyInfo keyinfo;
     do
     {
-      Console.Clear();
       Console.WriteLine(Localizer.GetString("gameName"));
       SoundSystem.LoadMenu();
       keyinfo = Console.ReadKey();
@@ -33,6 +32,8 @@ internal class MainMenu : IGlobabConsoleActions
         case ConsoleKey.Enter:
         case ConsoleKey.Spacebar:
           int score = PlayGame();
+          Console.Clear();
+          Console.WriteLine($"{Localizer.GetString("score")}: {score}");
           if (this.MaxScore < score) MaxScore = score;
           break;
         case ConsoleKey.F1:

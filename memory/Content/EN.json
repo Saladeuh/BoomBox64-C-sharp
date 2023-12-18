@@ -2,5 +2,6 @@
     "win": "You win!",
     "lose": "You lose.",
     "changeLang": "Change the language by pressing the corresponding number.",
-    "gameName": "Boom Box"
+    "gameName": "Boom Box",
+    "score": "Score"
 }

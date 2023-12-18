@@ -2,5 +2,6 @@
     "win": "Gagné!",
     "lose": "Perdu!",
     "changeLang": "Changez La langue en appuyant sur le numéro correspondant.",
-    "gameName": "Trésors sonores"
+    "gameName": "Trésors sonores",
+    "score":  "Score"
 }
