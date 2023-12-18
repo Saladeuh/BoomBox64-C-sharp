@@ -36,7 +36,7 @@ internal class Level : IGlobabConsoleActions
     {
       Console.Clear();
       keyinfo = Console.ReadKey();
-      if (char.IsDigit(keyinfo.KeyChar) && int.Parse(keyinfo.KeyChar.ToString()) <= NbSounds * 2)
+      if (char.IsDigit(keyinfo.KeyChar) && int.Parse(keyinfo.KeyChar.ToString()) <= NbSounds * 2 && int.Parse(keyinfo.KeyChar.ToString()) >0)
       {
         int caseIndex = int.Parse(keyinfo.KeyChar.ToString()) - 1;
         int soundIndex = Grid[caseIndex].Item1 - 1;

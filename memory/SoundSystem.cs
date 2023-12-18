@@ -106,7 +106,7 @@ public class SoundSystem
         do
         {
           System.GetChannelsPlaying(out int all, out real);
-        } while (real > 1);
+        } while (real > 2);
         Channel? channel = System.PlaySound(sound, paused: false);
         if (channel != null)
         {
