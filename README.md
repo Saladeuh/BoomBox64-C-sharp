@@ -1,5 +1,4 @@
+Implémentation en c# du mini-jeu Trésors Sonors (ou boom box)) de super mario 64 ds
 #todo
-Stock du meilleur score
 mode contre la montre
-Traduction anglais
 leaderboard?
