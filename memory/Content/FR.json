@@ -1,5 +1,6 @@
 {
     "win": "Gagné!",
     "lose": "Perdu!",
-    "changeLang": "Changez La lagnue en appuyant sur le numéro correspondant."
+    "changeLang": "Changez La langue en appuyant sur le numéro correspondant.",
+    "gameName": "Trésors sonores"
 }

@@ -5,6 +5,7 @@ using memoryGame;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace memory;
 
@@ -14,14 +15,15 @@ internal class Program
   static void Main()
   {
     var parameters = LoadJson();
-    SetConsoleParams();
+    SetConsoleParams(parameters.Language);
     var menu = new MainMenu(parameters);
-    parameters = menu.Run();
+    parameters= menu.Run();
     WriteJson(parameters);
   }
-  public static void SetConsoleParams()
+  public static void SetConsoleParams(string language)
   {
-    Console.Title = "Memory";
+    Console.Title = "Boom box";
+    if (language!=null) CultureInfo.CurrentUICulture = new CultureInfo(language);
   }
   public static Parameters LoadJson()
   {
@@ -39,7 +41,7 @@ internal class Program
   }
   public static void WriteJson(Parameters parameters)
   {
-    var json=JsonConvert.SerializeObject(parameters);
+    var json = JsonConvert.SerializeObject(parameters);
     File.WriteAllText(DATAFILEPATH, json);
   }
 }

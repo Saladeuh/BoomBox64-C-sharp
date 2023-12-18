@@ -24,6 +24,8 @@ internal class MainMenu : IGlobabConsoleActions
     ConsoleKeyInfo keyinfo;
     do
     {
+      Console.Clear();
+      Console.WriteLine(Localizer.GetString("gameName"));
       SoundSystem.LoadMenu();
       keyinfo = Console.ReadKey();
       switch (keyinfo.Key)
@@ -40,16 +42,15 @@ internal class MainMenu : IGlobabConsoleActions
         case ConsoleKey.L:
         case ConsoleKey.F5:
           ChangeLanguageMenu();
-        break;
+          break;
         default:
           GlobalActions(keyinfo.Key);
           break;
       }
     } while (keyinfo.Key != ConsoleKey.Escape);
-    return new Parameters { Score = MaxScore, Volume = SoundSystem.Volume };
+    return new Parameters { Score = MaxScore, Volume = SoundSystem.Volume, Language=CultureInfo.CurrentUICulture.TwoLetterISOLanguageName };
   }
 
-  
   public int PlayGame()
   {
     SoundSystem.FreeRessources();
@@ -64,7 +65,7 @@ internal class MainMenu : IGlobabConsoleActions
       string? group2 = null;
       int nbSounds = 4;
       int maxRetry = 4;
-      if (score % 3 == 0 && score!=0)
+      if (score % 3 == 0 && score != 0)
       {
         do
         {
@@ -84,7 +85,7 @@ internal class MainMenu : IGlobabConsoleActions
     } while (level.Play());
     return score;
   }
-  private void ChangeLanguageMenu()
+  private bool ChangeLanguageMenu()  // bool to indicate if a n^ew language is choosed
   {
     Console.WriteLine(this.Localizer.GetString("changeLang"));
     for (int i = 0; i < SUPPORTEDLANGUAGES.Length; i++)
@@ -98,8 +99,9 @@ internal class MainMenu : IGlobabConsoleActions
       if (char.IsDigit(keyinfo.KeyChar) && int.Parse(keyinfo.KeyChar.ToString()) < SUPPORTEDLANGUAGES.Length)
       {
         CultureInfo.CurrentUICulture = new CultureInfo(SUPPORTEDLANGUAGES[Int32.Parse(keyinfo.KeyChar.ToString())]);
-        break;
+        return true;
       }
     } while (keyinfo.Key != ConsoleKey.Escape);
+    return false;
   }
 }
