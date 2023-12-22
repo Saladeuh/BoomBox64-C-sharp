@@ -1,4 +1,4 @@
-﻿namespace memory;
+﻿namespace BoomBox;
 
 public static class Util
 {

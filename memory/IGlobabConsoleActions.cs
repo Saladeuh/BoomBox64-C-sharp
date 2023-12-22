@@ -9,7 +9,7 @@ using memoryGame;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 
-namespace memory;
+namespace BoomBox;
 
 internal abstract class IGlobabConsoleActions
 {

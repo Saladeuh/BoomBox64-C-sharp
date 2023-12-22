@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace memory;
+namespace BoomBox;
 
 internal class Program
 {

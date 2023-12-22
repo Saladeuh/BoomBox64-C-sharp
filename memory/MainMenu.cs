@@ -8,7 +8,7 @@ using FmodAudio;
 using memoryGame;
 using Microsoft.Extensions.Localization;
 
-namespace memory;
+namespace BoomBox;
 
 internal class MainMenu : IGlobabConsoleActions
 {
@@ -25,6 +25,7 @@ internal class MainMenu : IGlobabConsoleActions
     do
     {
       Console.WriteLine(Localizer.GetString("gameName"));
+
       SoundSystem.LoadMenu();
       keyinfo = Console.ReadKey();
       switch (keyinfo.Key)
