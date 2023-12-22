@@ -11,12 +11,12 @@ using Microsoft.Extensions.Logging;
 
 namespace BoomBox;
 
-internal abstract class IGlobabConsoleActions
+internal abstract class IGlobalConsoleActions
 {
   public abstract SoundSystem SoundSystem { get; set; }
   protected IStringLocalizer? Localizer { get; set; }
   public static readonly string[] SUPPORTEDLANGUAGES = { "fr", "en" };
-  public IGlobabConsoleActions()
+  public IGlobalConsoleActions()
   {
     string twoLetterISOLanguageName = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
     if (!SUPPORTEDLANGUAGES.Contains(twoLetterISOLanguageName))
@@ -26,7 +26,6 @@ internal abstract class IGlobabConsoleActions
     Func<string, LogLevel, bool> filterFunction = (category, logLevel) => logLevel >= LogLevel.Critical;
     ILogger logger = new Microsoft.Extensions.Logging.Console.ConsoleLogger("", filterFunction, false);
     Localizer = (IStringLocalizer)new JsonStringLocalizer("Content", "test", logger);
-    Console.WriteLine(twoLetterISOLanguageName);
   }
 
   private static void ChangeLanguage(string language)

@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 using System.Text;
-using System.Threading.Tasks;
-using FmodAudio;
 using memoryGame;
 using Microsoft.Extensions.Localization;
 
 namespace BoomBox;
 
-internal class MainMenu : IGlobabConsoleActions
+internal class MainMenu : IGlobalConsoleActions
 {
   public override SoundSystem SoundSystem { get; set; }
   public int MaxScore { get; set; }
@@ -24,9 +19,11 @@ internal class MainMenu : IGlobabConsoleActions
     ConsoleKeyInfo keyinfo;
     do
     {
-      Console.WriteLine(Localizer.GetString("gameName"));
+      Console.WriteLine(Localizer.GetString("welcome"));
+      Console.WriteLine(Localizer.GetString("goal"));
+      Console.WriteLine(Localizer.GetString("keys"));
 
-      SoundSystem.LoadMenu();
+            SoundSystem.LoadMenu();
       keyinfo = Console.ReadKey();
       switch (keyinfo.Key)
       {
@@ -50,7 +47,7 @@ internal class MainMenu : IGlobabConsoleActions
           break;
       }
     } while (keyinfo.Key != ConsoleKey.Escape);
-    return new Parameters { Score = MaxScore, Volume = SoundSystem.Volume, Language=CultureInfo.CurrentUICulture.TwoLetterISOLanguageName };
+    return new Parameters { Score = MaxScore, Volume = SoundSystem.Volume, Language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName };
   }
 
   public int PlayGame()

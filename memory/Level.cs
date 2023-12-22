@@ -4,7 +4,7 @@ using Microsoft.Extensions.Localization;
 
 namespace memoryGame;
 
-internal class Level : IGlobabConsoleActions
+internal class Level : IGlobalConsoleActions
 {
   private int Retry { get; set; }
   public int NbSounds { get; }
