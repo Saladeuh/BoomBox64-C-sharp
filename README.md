@@ -4,4 +4,5 @@
 - add time trial mode
 - Add more language
 - maybe add leaderboard webpage?
-Feel free to pull request or contact me 🥗
+
+## Feel free to contribute or contact me 🥗
