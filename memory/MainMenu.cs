@@ -50,7 +50,7 @@ internal class MainMenu : IGlobalConsoleActions
           GlobalActions(keyinfo.Key);
           break;
       }
-    } while (keyinfo.Key != ConsoleKey.Escape);
+    } while (keyinfo.Key != ConsoleKey.Escape   );
     return new Parameters { Score = MaxScore, Volume = SoundSystem.Volume, Language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName };
   }
 
