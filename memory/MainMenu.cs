@@ -8,7 +8,7 @@ namespace BoomBox;
 
 internal class MainMenu : IGlobalConsoleActions
 {
-  private const string CONTENTFOLDER = "Content/";
+  private const string CONTENTFOLDER = "Content/sounds";
   public FmodSystem System { get; }
   public override SoundSystem SoundSystem { get; set; }
   public int MaxScore { get; set; }
@@ -57,7 +57,6 @@ internal class MainMenu : IGlobalConsoleActions
   {
     SoundSystem.FreeRessources();
     var random = new Random();
-    //var groups = new List<string> { "misc64", "mario", "wario", "yoshi", "luigi", "red_coin" };
     var groups = Directory.GetDirectories(CONTENTFOLDER).ToList();
     int score = -1;
     Level level;
