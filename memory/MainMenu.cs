@@ -26,7 +26,7 @@ internal class MainMenu : IGlobalConsoleActions
       Console.WriteLine(Localizer.GetString("goal"));
       Console.WriteLine(Localizer.GetString("keys"));
 
-            SoundSystem.LoadMenu();
+      SoundSystem.LoadMenu();
       keyinfo = Console.ReadKey();
       switch (keyinfo.Key)
       {
@@ -39,11 +39,12 @@ internal class MainMenu : IGlobalConsoleActions
           break;
         case ConsoleKey.F1:
         case ConsoleKey.H:
-          Console.WriteLine("Aide");
+          //Console.WriteLine("Aide");
           break;
         case ConsoleKey.L:
         case ConsoleKey.F5:
-          ChangeLanguageMenu();
+          bool changed = ChangeLanguageMenu();
+          if (changed) Console.WriteLine("Language changed, please restart");
           break;
         default:
           GlobalActions(keyinfo.Key);

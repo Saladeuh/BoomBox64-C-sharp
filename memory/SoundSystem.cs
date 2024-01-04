@@ -72,7 +72,7 @@ public class SoundSystem
     {
       var files1 = Directory.GetFiles(group1, "*.wav");
       var rndArray1 = Enumerable.Range(0, files1.Length).OrderBy(item => rnd.Next()).ToArray();
-      var files2 = Directory.GetFiles(CONTENTFOLDER + group2, "*.wav");
+      var files2 = Directory.GetFiles(group2, "*.wav");
       var rndArray2 = Enumerable.Range(0, files2.Length).OrderBy(item => rnd.Next()).ToArray();
       for (int i = 0; i < MaxSounds; i++)
       {
